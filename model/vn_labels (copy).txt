@@ -1,0 +1,1 @@
+["VFO.Bà_Chúa_Xứ_Núi_Sam", "VFO.Đua_Bò_Bảy_Núi", "VFO.Okombok", "VFO.Nghinh_Ông", "VFO.Tết_Khmer_Chol_Chnam_Thmay", "VFO.Lễ_Đấu_Đèn_Chùa_Ông", "VFO.Lễ_Hội_Dừa", "VFO.Lễ_Vía_Bà_Thiên_Hậu", "VFO.Lễ_Giỗ_Đức_Khai_Trấn_Mạc_Cửu", "VFO.Lễ_Quan_Thánh_Đế_Quân"]

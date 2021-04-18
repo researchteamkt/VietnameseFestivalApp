@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+	<head>
+	<style>
+		table, td, th {
+		  border: 1px solid black;
+		}
+
+		table {
+		  border-collapse: collapse;
+		}
+	</style>
+	</head>
+   <body>
+      <table border = 1>
+         {% for each in result %}
+            <tr>
+               <th> {{ each }} </th>               
+            </tr>
+         {% endfor %}
+      </table>
+   </body>
+</html>

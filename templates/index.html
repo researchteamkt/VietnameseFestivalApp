@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Festivals in Vietnam</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{{ url_for('static', filename = 'assets/img/favicon.png') }}" rel="icon">
+  <link href="{{ url_for('static', filename = 'assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{{ url_for('static', filename = 'assets/vendor/animate.css/animate.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename = 'assets/vendor/aos/aos.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename = 'assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename = 'assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename = 'assets/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename = 'assets/vendor/remixicon/remixicon.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename = 'assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{{ url_for('static', filename = 'assets/css/style.css') }}" rel="stylesheet">
+  <style>
+    #my_camera{
+        width: 540px;
+        height: 480px;
+        border: 1px solid black;
+    }
+	#results_camera
+	{
+        width: 540px;
+        height: 480px;
+        border: 1px solid black;
+    }
+	#button-taking input{
+		padding:10px;
+		color: #fff;
+		border-radius: 3px;
+		border-color:#fff;
+		background-color: #5fcf80;
+	}
+	#button-taking input:hover{
+		background-color: #0fcf80;
+	}
+	#button-taking {
+	text-align:center;
+		width: 540px;
+		margin: 10px  0 0 0;
+	}
+	#button-taking1 input{
+		padding:10px;
+		color: #fff;
+		border-radius: 3px;
+		border-color:#fff;
+		background-color: #5fcf80;
+	}
+	#button-taking1 input:hover{
+		background-color: #0fcf80;
+	}
+	#button-taking1 {
+	text-align:center;
+		
+		margin: 10px  0 0 0;
+	}
+	
+	#map-link{
+		color: #fff;
+	}
+	.section-bg1{
+		background-color: #ccccc;
+	}
+	</style>
+
+  <!-- =======================================================
+  * Template Name: Mentor - v4.1.0
+  * Template URL: https://bootstrapmade.com/mentor-free-education-bootstrap-theme/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center">
+
+      <h1 class="logo me-auto"><a href="index.html">Festivals in Vietnam</a></h1>
+      <!-- Uncomment below if you prefer to use an image logo -->
+      <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+      <nav id="navbar" class="navbar order-last order-lg-0">
+        <ul>
+          <li><a class="active" href="index.html">Home</a></li>
+          <li><a href="#about">Take Camera</a></li>
+          <li><a href="#features">Dataset</a></li>
+          <li><a href="#popular-courses">Techniques</a></li>          
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+      <a href="courses.html" class="get-started-btn">About</a>
+
+    </div>
+  </header><!-- End Header -->
+
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="d-flex justify-content-center align-items-center">
+    <div class="container position-relative" data-aos="zoom-in" data-aos-delay="100">
+      <h1>Festivals of Vienam,<br>Intangible Cultural Preservation</h1>
+      <h2>For the first work, An IA Framework for Vietnamese Tourism (Festivals)</h2>
+      <a href="#" class="btn-get-started">Get Started</a>
+    </div>
+  </section><!-- End Hero -->
+
+  <main id="main">
+
+    <!-- ======= About Section ======= -->
+    <section id="about" class="about">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row">
+          <div class="col-lg-6 order-1 order-lg-2" data-aos="fade-left" data-aos-delay="100">
+				<h3>Snap-shot</h3>
+            	<div id="results_camera"> 
+				
+				</div>
+			<div id="button-taking">
+				<form action="/Classification" method = "POST" enctype = "multipart/form-data">
+				 <input type = "file" onchange="readURL(this);" id="file"/>
+				 <input type = "button" value = "Classification" id="but_upload"/>
+				 
+			        </form>
+			        <script>
+				 $(document).ready(function(){
+					 
+					 $("#but_upload").click(function(){
+						
+						var fd = new FormData();
+						var files = $('#file')[0].files;
+						
+						// Check file selected or not
+						if(files.length > 0 ){
+						   fd.append('file',files[0]);
+
+						   $.ajax({
+						      url: "/Classification",
+						      type: 'post',
+						      data: fd,
+						      contentType: false,
+						      processData: false,
+						      success: function(data){
+							 document.getElementById("res_classification").innerHTML = data;
+						      },
+						   });
+						}else{
+						   alert("Please select a file.");
+						}
+					    });
+				    });
+				 </script>					
+			</div>
+          </div>
+          <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content">
+            <h3>Camera</h3>
+			<div id="my_camera"></div>
+			<div id="button-taking">
+				<input type=button value="Camera" onClick="configure()">
+				<input type=button value="Take Snapshot" onClick="take_snapshot()">
+				<input type=button value="Save Snapshot" onClick="saveSnap()">				
+				
+			</div>
+
+			<script>
+			    function readURL(input) {
+					if (input.files && input.files[0]) {
+						var reader = new FileReader();
+
+						reader.onload = function (e) {
+							document.getElementById('results_camera').innerHTML = 
+								'<img id="imageprev" src="'+e.target.result+'" width="540px" height="480px"/>';
+							//$('#blah').attr('src', e.target.result);
+						};
+
+						reader.readAsDataURL(input.files[0]);
+					}
+				}
+			</script>
+			<!-- Script -->
+			<script type="text/javascript" src="{{ url_for('static', filename = 'js/webcam.min.js') }}"></script>
+			<!-- Code to handle taking the snapshot and displaying it locally -->
+				<script language="JavaScript">
+					
+					// Configure a few settings and attach camera
+					function configure(){
+						Webcam.set({
+							width: 540,
+							height: 480,
+							image_format: 'jpeg',
+							jpeg_quality: 100
+						});
+						Webcam.attach( '#my_camera' );
+					}
+					// A button for taking snaps
+					
+
+					// preload shutter audio clip
+					var shutter = new Audio();
+					shutter.autoplay = false;
+					shutter.src = navigator.userAgent.match(/Firefox/) ? 'shutter.ogg' : 'shutter.mp3';
+
+					function take_snapshot() {
+						// play sound effect
+						shutter.play();
+
+						// take snapshot and get image data
+						Webcam.snap( function(data_uri) {
+							// display results in page
+							document.getElementById('results_camera').innerHTML = 
+								'<img id="imageprev" src="'+data_uri+'"/>';
+						} );
+
+						Webcam.reset();
+					}
+
+					function saveSnap(){
+						// Get base64 value from <img id='imageprev'> source
+						var base64image =  document.getElementById("imageprev").src;
+
+						 Webcam.upload( base64image, 'upload.php', function(code, text) {
+							 console.log('Save successfully');
+							 //console.log(text);
+						});
+
+					}
+				</script>
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End About Section -->
+<!------------------------------->
+   <section id="counts" class="counts section-bg1">
+      <div class="container">
+
+        <div class="row ">
+			<div id="button-taking1">
+				
+				{% for each in FesNames %}
+				    <li>{{ each }} </li>
+				{% endfor %}
+				<div id="res_classification">
+				</div>
+				<form method="GET" action="/Description">
+					<input type="Text" name="Place"/>
+					<input type="Text" id="Month" name="Month"/>
+					<input type="submit" value="Description"/>
+				</form>				
+			</div>
+         
+
+        </div>
+
+      </div>
+
+    </section><!-- End Counts Section -->
+
+<!---------------------------------->
+    <!-- ======= Counts Section ======= -->
+    <section id="counts" class="counts section-bg">
+      <div class="container">
+
+        <div class="row counters">
+
+          <div class="col-lg-3 col-6 text-center">
+            <span data-purecounter-start="0" data-purecounter-end="1588" data-purecounter-duration="1" class="purecounter"></span>
+            <p>Photos/Images</p>
+          </div>
+
+          <div class="col-lg-3 col-6 text-center">
+            <span data-purecounter-start="0" data-purecounter-end="138" data-purecounter-duration="1" class="purecounter"></span>
+            <p>Concepts (Regions)</p>
+          </div>
+
+          <div class="col-lg-3 col-6 text-center">
+            <span data-purecounter-start="0" data-purecounter-end="64" data-purecounter-duration="1" class="purecounter"></span>
+            <p>Ethnic Groups</p>
+          </div>
+		  
+
+          <div class="col-lg-3 col-6 text-center">
+            <span data-purecounter-start="0" data-purecounter-end="10" data-purecounter-duration="1" class="purecounter"></span>
+            <p>Festivals</p>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Counts Section -->
+
+    <!-- ======= Why Us Section ======= -->
+    <section id="why-us" class="why-us">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row">
+          <div class="col-lg-4 d-flex align-items-stretch">
+            <div class="content">
+              <h3>Where are you?</h3>
+              <p>
+					<!--<button id = "find-me">Your Location</button><br/>-->
+              </p>
+              <div class="text-center">
+				<button id = "find-me" class="more-btn">Your Location</button><br/>				
+				<script>
+					var now= new Date();					
+					document.getElementById("Month").value=now.getMonth()+1;
+				</script>
+                <!--<a href="#" >Top <i class="bx bx-chevron-right"></i></a>-->
+              </div>
+			  <div class="text-center">
+			  		<p id = "status"></p>
+					<a id = "map-link" target="_blank"></a>					
+			  </div>
+			  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+			  <script>
+
+					function geoFindMe() {
+					  const status = document.querySelector('#status');
+					  const mapLink = document.querySelector('#map-link');
+
+					  mapLink.href = '';
+					  mapLink.textContent = '';
+
+					  function success(position) {
+						const latitude  = position.coords.latitude;
+						const longitude = position.coords.longitude;
+
+						status.textContent = '';
+						mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
+						mapLink.href = `https://www.google.com/maps?q=${latitude},${longitude}`;
+						
+						mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °`;
+						
+						var latlongvalue = position.coords.latitude + ","
+						+ position.coords.longitude;
+						var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="+latlongvalue+"&zoom=14&sensor=true&size=400x300&key=AIzaSyAa8HeLH2lQMbPeOiMlM9D1VxZ7pbGQq8o";
+						document.getElementById("mapholder").innerHTML ="<img src='"+img_url+"'>";
+						$.ajax({
+							data: {
+								lon: longitude,
+								lat: latitude,
+							},
+							type: "POST",
+							url: "/getAddress",
+						}).done(function(data) {							
+							document.getElementById("mapholder1").innerHTML = data;
+						});
+
+						
+						var display=setInterval(function(){Time()},0);
+
+						}
+						function Time()
+						{
+							var date=new Date();
+							var time=date.toLocaleTimeString();
+							document.getElementById("currenttime").innerHTML=time;
+							document.getElementById("currentdate").innerHTML=date;
+						}
+					  function error() {
+						status.textContent = 'Unable to retrieve your location';
+					  }
+
+					  if (!navigator.geolocation) {
+						status.textContent = 'Geolocation is not supported by your browser';
+					  } else {
+						status.textContent = 'Locating…';
+						navigator.geolocation.getCurrentPosition(success, error);
+					  }
+
+					}
+					document.querySelector('#find-me').addEventListener('click', geoFindMe);
+					
+			
+					</script>
+					
+            </div>
+          </div>
+          <div class="col-lg-4 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+            <div class="icon-boxes d-flex flex-column justify-content-center">
+     			<div id="mapholder"></div>						
+				<div id="mapholder1"></div>	
+            </div><!-- End .content-->
+		   </div>
+		   <div class="col-lg-4 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+			<div class="icon-boxes d-flex flex-column justify-content-center">     					
+				<p>Current Time: <span id="currenttime"></span></p>
+				<p>Current Date: <span id="currentdate"></span></p>	
+				<pre id="json-result"></pre>				
+            </div><!-- End .content-->
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End Why Us Section -->
+
+    <!-- ======= Features Section ======= -->
+    <section id="features" class="features">
+      <div class="container" data-aos="fade-up">
+
+
+      </div>
+    </section><!-- End Features Section -->
+
+    <!-- ======= Popular Courses Section ======= -->
+    <section id="popular-courses" class="courses">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+          <h2>Supports</h2>
+          <p>Techniques</p>
+        </div>
+
+        <div class="row" data-aos="zoom-in" data-aos-delay="100">
+
+          <div class="col-lg-4 col-md-4 d-flex align-items-stretch">
+            <div class="course-item">
+				<h5>Festival Ontology</h5>
+              <image src="{{ url_for('static', filename = 'assets/img/ontology1.PNG') }}" width="400px"/>             
+            </div>
+          </div> <!-- End Course Item-->
+
+			<div class="col-lg-4 col-md-4 d-flex align-items-stretch mt-4 mt-md-0">
+				<div class="course-item">
+					<h5>PhoBERT</h5>
+					<image src="{{ url_for('static', filename = 'assets/img/Post-FB-n-scaled.jpg') }}" width="400px"/>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-4 d-flex align-items-stretch">
+				<div class="course-item">
+					<h5>Deep CNN</h5>
+					<image src="{{ url_for('static', filename = 'assets/img/A-general-DCNN-architecture1.png') }}" width="400px"/>             
+				</div>
+			</div>
+
+          </div> <!-- End Course Item-->
+        </div>
+
+
+      </div>
+    </section><!-- End Popular Courses Section -->
+
+    <!-- ======= Trainers Section ======= -->
+    <section id="trainers" class="trainers">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row" data-aos="zoom-in" data-aos-delay="100">
+          <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
+            
+          </div>
+        </div>
+      </div>
+    </section><!-- End Trainers Section -->
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-3 col-md-6 footer-contact">
+            <h3>Festivals in Vietnam</h3>
+            <p>
+              AGU, Ung Van Khiem street <br>
+              An Giang, VN 9500000<br>
+              United States <br><br>
+              <strong>Phone:</strong> +84 0948.77.99.77<br>
+              <strong>Email:</strong> ma@cril.fr<br>
+            </p>
+          </div>
+
+          <div class="col-lg-2 col-md-6 footer-links">
+
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-links">
+            
+          </div>
+
+          <div class="col-lg-4 col-md-6 footer-newsletter">
+            <h4>Contact to us</h4>
+            <p>Please send your email. We are going to contact you immediately</p>
+            <form action="" method="post">
+              <input type="email" name="email"><input type="submit" value="Subscribe">
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div id="contact" class="container d-md-flex py-4">
+
+      <div class="me-md-auto text-center text-md-start">
+        <div class="copyright">
+          &copy; Copyright <strong><span>Festivals in Vietnam</span></strong>. All Rights Reserved
+        </div>
+        <div class="credits">
+          Designed by the author group
+        </div>
+      </div>
+      <div class="social-links text-center text-md-right pt-3 pt-md-0">
+        <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+        <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+        <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+        <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+        <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <div id="preloader"></div>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="{{ url_for('static', filename = 'assets/vendor/aos/aos.js') }}"></script>
+  <script src="{{ url_for('static', filename = 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename = 'assets/vendor/php-email-form/validate.js') }}"></script>
+  <script src="{{ url_for('static', filename = 'assets/vendor/purecounter/purecounter.js') }}"></script>
+  <script src="{{ url_for('static', filename = 'assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{{ url_for('static', filename = 'assets/js/main.js') }}"></script>
+  
+
+</body>
+
+</html>

@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+	<head>
+	<style>
+		table, td, th {
+		  border: 1px solid black;
+		  padding:10px
+		}
+
+		table {
+		  border-collapse: collapse;
+		}
+	</style>
+	</head>
+
+   <body>
+		<h3>List of Festival Names</h3>
+       <ol>
+         {% for each in Names %}
+            <li>{{ each }} </li>
+         {% endfor %}
+      </ol>
+      <hr/>
+	  <h3>Description in Detail</h3>
+	  <table border = 1>
+         {% for key, value in Des.items() %}
+            <tr>
+               <th> {{ key }} <a href="/chatbot?key={{ key }}">Chat Bot</a> </th>
+               <td> {{ value }} </td>
+            </tr>
+         {% endfor %}
+      </table>
+	  
+   </body>
+</html>
